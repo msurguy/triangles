@@ -13,7 +13,7 @@ The tool provides export to PNG and SVG formats. With SVG format you could creat
 ## Show me some results!
 
 You can see some examples of the patterns made with this tool here:
-
+![0](https://raw.github.com/msurguy/triangles/master/examples/0.jpg)
 ![1](https://raw.github.com/msurguy/triangles/master/examples/1.jpg)
 ![2](https://raw.github.com/msurguy/triangles/master/examples/2.jpg)
 ![3](https://raw.github.com/msurguy/triangles/master/examples/3.jpg)
