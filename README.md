@@ -59,7 +59,7 @@ Maksim Surguy [@msurguy][msurguy]
 
 There are a few things that can be improved to make this tool even better.
 
-- Add varying depth of the vertices of the triangles
+- ~~Add varying depth of the vertices of the triangles~~ (Done as of 4/15/2014)
 - Add more color variation and presets
 - Add text overlay and customizer
 
