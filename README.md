@@ -8,11 +8,11 @@ This project allows you to create beautiful high quality images featuring a nice
 - Posters
 - And more
 
-The tool provides export to PNG and SVG formats. With SVG format you could create an image of virtually any size, even a billboard.
+The tool provides export to PNG and SVG formats. With SVG format you could create an image of virtually any size, even as big as a billboard. Go crazy with it!
 
 ## Show me some results!
 
-You can see some examples of the patterns made with this tool here:
+You can see some examples of the patterns made with this tool here (the first one had text overlay added in Photoshop):
 ![0](https://raw.github.com/msurguy/triangles/master/examples/0.jpg)
 ![1](https://raw.github.com/msurguy/triangles/master/examples/1.jpg)
 ![2](https://raw.github.com/msurguy/triangles/master/examples/2.jpg)
@@ -21,6 +21,13 @@ You can see some examples of the patterns made with this tool here:
 ![5](https://raw.github.com/msurguy/triangles/master/examples/5.jpg)
 ![6](https://raw.github.com/msurguy/triangles/master/examples/6.jpg)
 ![7](https://raw.github.com/msurguy/triangles/master/examples/7.jpg)
+
+## Using
+
+- To add a new light press Enter key on your keyboard or increase count manually via the slider.
+- To "drop" or "pick up" the currently selected light, press Space bar.
+- To change colors of the lights, change the ambient and diffuse color controls.
+- To export as SVG select SVG in the "renderer" panel and then export the image via "Export big" button.
 
 ## Running
 
@@ -47,6 +54,16 @@ The shader work was done by Matthew Wagerfield on his MIT-licensed [repository][
 ## Author
 
 Maksim Surguy [@msurguy][msurguy]
+
+## TODO
+
+There are a few things that can be improved to make this tool even better.
+
+- Add varying depth of the vertices of the triangles
+- Add more color variation and presets
+- Add text overlay and customizer
+
+If you can do any of these things - feel free to make a pull request!
 
 ## License
 
