@@ -7,6 +7,8 @@
     width: 1.2,
     height: 1.2,
     slices: 250,
+    depth: 0,
+    maxdepth: 200,
     ambient: '#555555',
     diffuse: '#FFFFFF'
   };
@@ -83,6 +85,8 @@
         FSS.Vector3.set(light.position, x*scalarX, y*scalarY, z*scalarX);
       }
 
+      // Update depth of the triangles
+      update();
       // Render the canvas
       render();
 
@@ -175,6 +179,14 @@
     material = new FSS.Material(MESH.ambient, MESH.diffuse);
     mesh = new FSS.Mesh(geometry, material);
     scene.add(mesh);
+
+    // Augment vertices for animation
+    var v, vertex;
+    for (v = geometry.vertices.length - 1; v >= 0; v--) {
+      vertex = geometry.vertices[v];
+      vertex.depth = Math.randomInRange(0, MESH.maxdepth/10);
+      vertex.anchor = FSS.Vector3.clone(vertex.position);
+    }
   }
 
   // Add a single light
@@ -208,9 +220,26 @@
   }
 
   function animate() {
+    update();
     render();
     requestAnimationFrame(animate);
   }
+
+  function update() {
+      var v, vertex, offset = MESH.depth/100;
+      
+      // Animate Vertices
+      for (v = geometry.vertices.length - 1; v >= 0; v--) {
+        vertex = geometry.vertices[v];
+        FSS.Vector3.set(vertex.position, 1, 1, vertex.depth*offset);
+        FSS.Vector3.add(vertex.position, vertex.anchor);
+      }
+
+      // Set the Geometry to dirty
+      geometry.dirty = true;
+    }
+
+
 
   function render() {
     renderer.render(scene);
@@ -265,6 +294,9 @@
     controller.onChange(function(value) {
       if (geometry.height !== value * renderer.height) { createMesh(); }
     });
+
+    controller = meshFolder.add(MESH, 'depth', 0, MESH.maxdepth);
+
     controller = meshFolder.add(MESH, 'slices', 1, 800);
     controller.step(1);
     controller.onChange(function(value) {

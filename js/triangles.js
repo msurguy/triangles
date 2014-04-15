@@ -801,14 +801,16 @@ FSS.Plane = function(width, height, howmany) {
 
   for(i = triangles.length; i; ) {
     --i;
-    var p1 = [Math.ceil(vertices[triangles[i]][0]), Math.ceil(vertices[triangles[i]][1])];
+    v1 = new FSS.Vertex(Math.ceil(vertices[triangles[i]][0]), Math.ceil(vertices[triangles[i]][1]));
     --i;
-    var p2 = [Math.ceil(vertices[triangles[i]][0]), Math.ceil(vertices[triangles[i]][1])];
+    v2 = new FSS.Vertex(Math.ceil(vertices[triangles[i]][0]), Math.ceil(vertices[triangles[i]][1]));
     --i;
-    var p3 = [Math.ceil(vertices[triangles[i]][0]), Math.ceil(vertices[triangles[i]][1])];
-
-    t1 = new FSS.Triangle(new FSS.Vertex(p1[0],p1[1]), new FSS.Vertex(p2[0],p2[1]), new FSS.Vertex(p3[0],p3[1]));
+    v3 = new FSS.Vertex(Math.ceil(vertices[triangles[i]][0]), Math.ceil(vertices[triangles[i]][1]));
+    t1 = new FSS.Triangle(v1,v2,v3);
     this.triangles.push(t1);
+    this.vertices.push(v1);
+    this.vertices.push(v2);
+    this.vertices.push(v3);
   }
 };
 
@@ -1583,6 +1585,8 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
     width: 1.2,
     height: 1.2,
     slices: 250,
+    depth: 0,
+    maxdepth: 200,
     ambient: '#555555',
     diffuse: '#FFFFFF'
   };
@@ -1659,6 +1663,8 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
         FSS.Vector3.set(light.position, x*scalarX, y*scalarY, z*scalarX);
       }
 
+      // Update depth of the triangles
+      update();
       // Render the canvas
       render();
 
@@ -1751,6 +1757,14 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
     material = new FSS.Material(MESH.ambient, MESH.diffuse);
     mesh = new FSS.Mesh(geometry, material);
     scene.add(mesh);
+
+    // Augment vertices for animation
+    var v, vertex;
+    for (v = geometry.vertices.length - 1; v >= 0; v--) {
+      vertex = geometry.vertices[v];
+      vertex.depth = Math.randomInRange(0, MESH.maxdepth/10);
+      vertex.anchor = FSS.Vector3.clone(vertex.position);
+    }
   }
 
   // Add a single light
@@ -1784,9 +1798,26 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
   }
 
   function animate() {
+    update();
     render();
     requestAnimationFrame(animate);
   }
+
+  function update() {
+      var v, vertex, offset = MESH.depth/100;
+      
+      // Animate Vertices
+      for (v = geometry.vertices.length - 1; v >= 0; v--) {
+        vertex = geometry.vertices[v];
+        FSS.Vector3.set(vertex.position, 1, 1, vertex.depth*offset);
+        FSS.Vector3.add(vertex.position, vertex.anchor);
+      }
+
+      // Set the Geometry to dirty
+      geometry.dirty = true;
+    }
+
+
 
   function render() {
     renderer.render(scene);
@@ -1841,6 +1872,9 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
     controller.onChange(function(value) {
       if (geometry.height !== value * renderer.height) { createMesh(); }
     });
+
+    controller = meshFolder.add(MESH, 'depth', 0, MESH.maxdepth);
+
     controller = meshFolder.add(MESH, 'slices', 1, 800);
     controller.step(1);
     controller.onChange(function(value) {
