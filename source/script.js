@@ -204,11 +204,14 @@
 
   // Remove lights 
   function trimLights(value) {
-    LIGHT.proxy = scene.lights[value];
-    for (l = value; l >= scene.lights.length - 1; l--) {
+    for (l = value; l <= scene.lights.length; l++) {
       light = scene.lights[l];
       scene.remove(light);
+      LIGHT.currIndex--;
     }
+    LIGHT.proxy = scene.lights[LIGHT.currIndex-1];
+    LIGHT.pickedup = false;
+
     renderer.clear();
   }
 
@@ -226,20 +229,18 @@
   }
 
   function update() {
-      var v, vertex, offset = MESH.depth/100;
-      
-      // Animate Vertices
-      for (v = geometry.vertices.length - 1; v >= 0; v--) {
-        vertex = geometry.vertices[v];
-        FSS.Vector3.set(vertex.position, 1, 1, vertex.depth*offset);
-        FSS.Vector3.add(vertex.position, vertex.anchor);
-      }
-
-      // Set the Geometry to dirty
-      geometry.dirty = true;
+    var v, vertex, offset = MESH.depth/100;
+    
+    // Add depth to Vertices
+    for (v = geometry.vertices.length - 1; v >= 0; v--) {
+      vertex = geometry.vertices[v];
+      FSS.Vector3.set(vertex.position, 1, 1, vertex.depth*offset);
+      FSS.Vector3.add(vertex.position, vertex.anchor);
     }
 
-
+    // Set the Geometry to dirty
+    geometry.dirty = true;
+  }
 
   function render() {
     renderer.render(scene);
@@ -308,31 +309,35 @@
     controller = lightFolder.add(LIGHT, 'currIndex', {1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7}).name('Current light').listen();
     controller.onChange(function(value) {
       LIGHT.proxy = scene.lights[value-1];
+
       LIGHT.ambient = LIGHT.proxy.ambient.hex;
       LIGHT.diffuse = LIGHT.proxy.diffuse.hex;
-      LIGHT.xPos =  LIGHT.proxy.position[0];
-      LIGHT.yPos =  LIGHT.proxy.position[1];
-      LIGHT.zOffset =  LIGHT.proxy.position[2];
+      LIGHT.xPos    = LIGHT.proxy.position[0];
+      LIGHT.yPos    = LIGHT.proxy.position[1];
+      LIGHT.zOffset = LIGHT.proxy.position[2];
+
+      // Hacky way to allow manual update of the HEX colors for light's ambient and diffuse
+      gui.__folders.Light.__controllers[1].updateDisplay();
+      gui.__folders.Light.__controllers[2].updateDisplay();
     });
 
-    controller = lightFolder.addColor(LIGHT, 'ambient').listen();
+    controller = lightFolder.addColor(LIGHT, 'ambient');
     controller.onChange(function(value) {
       LIGHT.proxy.ambient.set(value);
       LIGHT.proxy.ambientHex =  LIGHT.proxy.ambient.format();
     });
 
-    controller = lightFolder.addColor(LIGHT, 'diffuse').listen();
+    controller = lightFolder.addColor(LIGHT, 'diffuse');
     controller.onChange(function(value) {
-      console.log(value);
       LIGHT.proxy.diffuse.set(value);
-      LIGHT.proxy.diffuseHex = LIGHT.proxy.ambient.format();
+      LIGHT.proxy.diffuseHex = LIGHT.proxy.diffuse.format();
     });
 
     controller = lightFolder.add(LIGHT, 'count', 1, 7).listen();
     controller.step(1);
     controller.onChange(function(value) {
       if (scene.lights.length !== value) { 
-        // If the value is more then the number of lights, add lights, otherwise delete lights
+        // If the value is more then the number of lights, add lights, otherwise delete lights from the scene
         if (value > scene.lights.length) {
           addLight(); 
         } else {
@@ -377,7 +382,6 @@
        e.style.display = 'block';
   }
 
-
   //------------------------------
   // Callbacks
   //------------------------------
@@ -397,7 +401,9 @@
 
   // Hide the controls completely on pressing H
   Mousetrap.bind('H', function() { 
-    toggleEl('controls')
+    toggleEl('controls');
+    toggleEl('links');
+
   });
 
   // Add a light on ENTER key
