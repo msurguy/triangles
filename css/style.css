@@ -74,6 +74,21 @@ a:hover {
   border-bottom: rgba(255,255,255,0.1) 1px solid;
 }
 
+.links p{
+  font-smoothing: subpixel-antialiased;
+  font-family: 'Dosis', sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.25em 0;
+  letter-spacing: 2px;
+  font-weight: 200;
+  font-size: 10px;
+  display: block;
+  width: 100%;
+  opacity: 0.6;
+  color: #FFF;
+}
+
 .links li a {
   transition: opacity 0.2s ease-out;
   font-smoothing: subpixel-antialiased;
