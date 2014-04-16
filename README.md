@@ -12,7 +12,10 @@ The tool provides export to PNG and SVG formats. With SVG format you could creat
 
 ## Show me some results!
 
-You can see some examples of the patterns made with this tool here (the first one had text overlay added in Photoshop):
+Here's a video on Youtube of the tool in action, creating 11 wallpapers in under 7 minutes:
+[![Video demo of the tool](http://img.youtube.com/vi/JbD-HsmBt_0/0.jpg)](http://www.youtube.com/watch?v=JbD-HsmBt_0)
+
+You can see some examples of the patterns made with this tool in this repository (the first one had text overlay added in Photoshop):
 ![0](https://raw.github.com/msurguy/triangles/master/examples/0.jpg)
 ![1](https://raw.github.com/msurguy/triangles/master/examples/1.jpg)
 ![2](https://raw.github.com/msurguy/triangles/master/examples/2.jpg)
