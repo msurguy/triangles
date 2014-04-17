@@ -12,6 +12,12 @@ The tool provides export to PNG and SVG formats. With SVG format you could creat
 
 ## Show me some results!
 
+Here is a few most obvious uses for the tool:
+
+![three devices](https://raw.github.com/msurguy/triangles/master/examples/three-devices.png)
+![two devices](https://raw.github.com/msurguy/triangles/master/examples/two-devices.png)
+![billboard](https://raw.github.com/msurguy/triangles/master/examples/billboard.png)
+
 You can see some examples of the patterns made with this tool here (the first one had text overlay added in Photoshop):
 ![0](https://raw.github.com/msurguy/triangles/master/examples/0.jpg)
 ![1](https://raw.github.com/msurguy/triangles/master/examples/1.jpg)
