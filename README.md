@@ -12,10 +12,16 @@ The tool provides export to PNG and SVG formats. With SVG format you could creat
 
 ## Show me some results!
 
-Here's a video on Youtube of the tool in action, creating 11 wallpapers in under 7 minutes:
+Here are a few of most obvious uses for the tool:
+
+![three devices](https://raw.github.com/msurguy/triangles/master/examples/three-devices.png)
+![two devices](https://raw.github.com/msurguy/triangles/master/examples/two-devices.png)
+![billboard](https://raw.github.com/msurguy/triangles/master/examples/billboard.png)
+
+And I made a video on Youtube of the tool in action, creating 11 wallpapers in under 7 minutes:
 [![Video demo of the tool](http://img.youtube.com/vi/JbD-HsmBt_0/0.jpg)](http://www.youtube.com/watch?v=JbD-HsmBt_0)
 
-You can see some examples of the patterns made with this tool in this repository (the first one had text overlay added in Photoshop):
+You can also see some examples of the patterns made with this tool in this repository in the examples folder (the first one had text overlay added in Photoshop):
 ![0](https://raw.github.com/msurguy/triangles/master/examples/0.jpg)
 ![1](https://raw.github.com/msurguy/triangles/master/examples/1.jpg)
 ![2](https://raw.github.com/msurguy/triangles/master/examples/2.jpg)
@@ -30,7 +36,7 @@ You can see some examples of the patterns made with this tool in this repository
 - To add a new light press Enter key on your keyboard or increase count manually via the slider.
 - To "drop" or "pick up" the currently selected light, press Space bar.
 - To change colors of the lights, change the ambient and diffuse color controls.
-- To export as SVG select SVG in the "renderer" panel and then export the image via "Export big" button.
+- To export as SVG select SVG in the "renderer" panel and then export the image via "Export big" button. Then navigate to "File -> Save as" in the browser's menu to save the resulting image to your computer.
 
 ## Running
 
