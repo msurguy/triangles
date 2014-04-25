@@ -17,7 +17,7 @@
   // Light Properties
   //------------------------------
   var LIGHT = {
-    count: 1,
+    count: 0,
     xPos : 0,
     yPos : 200,
     zOffset: 100,
@@ -25,7 +25,44 @@
     diffuse: '#FF8800',
     pickedup :true,
     proxy : false,
-    currIndex : 0
+    currIndex : 0,
+    randomize : function(){
+      var x,y,z;
+      var decider = Math.floor(Math.random() * 3) + 1;
+
+      if (decider == 1) MESH.depth = 0;
+      if (decider == 2) MESH.depth = Math.randomInRange(0, 150);
+      if (decider == 3) MESH.depth = Math.randomInRange(150, 200);
+
+      for (l = scene.lights.length - 1; l >= 0; l--) {
+        x = Math.randomInRange(-mesh.geometry.width/2, mesh.geometry.width/2);
+        y = Math.randomInRange(-mesh.geometry.height/2, mesh.geometry.height/2);
+        if(scene.lights.length > 2) z = Math.randomInRange(10, 80);
+        else z = Math.randomInRange(10, 100);
+
+        light = scene.lights[l];
+        FSS.Vector3.set(light.position, x, y, z);
+
+        var diffuse = getRandomColor();
+        var ambient = getRandomColor();
+
+        light.diffuse.set(diffuse);
+        light.diffuseHex = light.diffuse.format();
+
+        light.ambient.set(ambient);
+        light.ambientHex = light.ambient.format();
+
+        LIGHT.xPos    = x;
+        LIGHT.yPos    = y;
+        LIGHT.zOffset = z;
+        LIGHT.diffuse = diffuse;
+        LIGHT.ambient = ambient;
+
+        // Hacky way to allow manual update of the HEX colors for light's diffuse
+        gui.__folders.Light.__controllers[1].updateDisplay();
+        gui.__folders.Light.__controllers[2].updateDisplay();
+      }
+    }
   };
 
   //------------------------------
@@ -68,7 +105,7 @@
       // store a temp value of the slices
       var slices = MESH.slices;
       // Increase or decrease number of slices depending on the size of the canvas
-      MESH.slices = Math.ceil(slices*scalarX*1.3);
+      MESH.slices = Math.ceil(slices*scalarX*1.4);
 
       // Regenerate the whole canvas
       resize(this.width, this.height);
@@ -135,9 +172,10 @@
     createRenderer();
     createScene();
     createMesh();
-    addLight();
+    addLights();
     addEventListeners();
     addControls();
+    LIGHT.randomize();
     resize(container.offsetWidth, container.offsetHeight);
     animate();
   }
@@ -180,7 +218,7 @@
     mesh = new FSS.Mesh(geometry, material);
     scene.add(mesh);
 
-    // Augment vertices for animation
+    // Augment vertices for depth modification
     var v, vertex;
     for (v = geometry.vertices.length - 1; v >= 0; v--) {
       vertex = geometry.vertices[v];
@@ -190,16 +228,32 @@
   }
 
   // Add a single light
-  function addLight() {
+  function addLight(ambient, diffuse, x, y, z) {
+    ambient = typeof ambient !== 'undefined' ? ambient : LIGHT.ambient;
+    diffuse = typeof diffuse !== 'undefined' ? diffuse : getRandomColor();
+    x = typeof x !== 'undefined' ? x : LIGHT.xPos;
+    y = typeof y !== 'undefined' ? y : LIGHT.yPos;
+    z = typeof z !== 'undefined' ? z : LIGHT.zOffset;
+
     renderer.clear();
-    light = new FSS.Light(LIGHT.ambient, LIGHT.diffuse);
+    light = new FSS.Light(ambient, diffuse);
     light.ambientHex = light.ambient.format();
     light.diffuseHex = light.diffuse.format();
-    light.setPosition(LIGHT.xPos, LIGHT.yPos, LIGHT.zOffset);
+    light.setPosition(x, y, z);
     scene.add(light);
+    LIGHT.diffuse = diffuse;
     LIGHT.proxy = light;
     LIGHT.pickedup = true;
     LIGHT.currIndex++;
+  }
+
+  function addLights() {
+    var num = Math.floor(Math.random() * 4) + 1;
+    
+    for (var i = num - 1; i >= 0; i--) {
+      addLight();
+      LIGHT.count++;
+    };
   }
 
   // Remove lights 
@@ -296,7 +350,7 @@
       if (geometry.height !== value * renderer.height) { createMesh(); }
     });
 
-    controller = meshFolder.add(MESH, 'depth', 0, MESH.maxdepth);
+    controller = meshFolder.add(MESH, 'depth', 0, MESH.maxdepth).listen();
 
     controller = meshFolder.add(MESH, 'slices', 1, 800);
     controller.step(1);
@@ -364,6 +418,8 @@
       LIGHT.proxy.setPosition(LIGHT.proxy.position[0], LIGHT.proxy.position[1], value);
     });
 
+    controller = lightFolder.add(LIGHT, 'randomize');
+
     // Add Export Controls
     controller = exportFolder.add(EXPORT, 'width', 100, 3000);
     controller.step(100);
@@ -371,7 +427,7 @@
     controller.step(100);
     controller = exportFolder.add(EXPORT, 'export').name('export big');
     controller = exportFolder.add(EXPORT, 'exportCurrent').name('export this');
-
+    
   }
 
   function toggleEl(id) {
@@ -380,6 +436,10 @@
        e.style.display = 'none';
     else
        e.style.display = 'block';
+  }
+
+  function getRandomColor(){
+    return '#'+(Math.random().toString(16) + '000000').slice(2, 8);
   }
 
   //------------------------------
