@@ -1990,7 +1990,53 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
       LIGHT.proxy.setPosition(LIGHT.proxy.position[0], value, LIGHT.proxy.position[2]);
     });
 
+    
+
+    /* JQuery Block ****
+	** Two different binds called to allow for mouse-scroll modification of
+	** z-offset. One of the binds handle specifically for Firefox,
+	** and the other handles for IE, Opera and Safari
+	** Works in: Opera, Safari, IE9+. and Chrome.
+	** NaN Error in Firefox.
+    */
+
     controller = lightFolder.add(LIGHT, 'zOffset', 0, 1000).name('Distance').listen();
+	scrollButtonDistance = Number(LIGHT.proxy.position[2]);
+	//Firefox
+	$('#container').bind('DOMMouseScroll', function(e) {
+		if(e.originalEvent.detail > 0) {
+		 scrollButtonDistance = Number(Math.max(0, scrollButtonDistance - e.detail/4));
+		} else {
+		 scrollButtonDistance =  Number(Math.min(1000, scrollButtonDistance - e.detail/4));
+		}
+
+		LIGHT.proxy.setPosition(LIGHT.proxy.position[0], LIGHT.proxy.position[1], scrollButtonDistance);
+		 LIGHT.zOffset = scrollButtonDistance;
+		LIGHT.z = scrollButtonDistance;
+		gui.__folders.Light.__controllers[1].updateDisplay();
+		gui.__folders.Light.__controllers[2].updateDisplay();
+		return false;
+	});
+
+	//IE, Opera, Safari
+	$('#container').bind('mousewheel', function(e) {
+		if(e.originalEvent.wheelDelta < 0) {
+		 scrollButtonDistance =  Number(Math.max(0, scrollButtonDistance + e.originalEvent.wheelDelta/4));
+		} else {
+		 scrollButtonDistance = Number(Math.min(1000, scrollButtonDistance + e.originalEvent.wheelDelta/4));
+		}
+
+		LIGHT.proxy.setPosition(Number(LIGHT.proxy.position[0]), Number(LIGHT.proxy.position[1]), scrollButtonDistance);
+		LIGHT.zOffset = scrollButtonDistance;
+		LIGHT.z = scrollButtonDistance;
+		gui.__folders.Light.__controllers[1].updateDisplay();
+		gui.__folders.Light.__controllers[2].updateDisplay();
+
+		return false;
+	});
+
+	/* End JQuery Block */
+
     controller.step(1);
     controller.onChange(function(value) {
       LIGHT.proxy.setPosition(LIGHT.proxy.position[0], LIGHT.proxy.position[1], value);
