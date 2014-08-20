@@ -160,7 +160,7 @@ var Delaunay;
        * array. */
       st = supertriangle(vertices);
       vertices.push(st[0], st[1], st[2]);
-      
+
       /* Initialize the open list (containing the supertriangle and nothing
        * else) and the closed list (which is empty since we havn't processed
        * any triangles yet). */
@@ -1827,14 +1827,14 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
 
   function addLights() {
     var num = Math.floor(Math.random() * 4) + 1;
-    
+
     for (var i = num - 1; i >= 0; i--) {
       addLight();
       LIGHT.count++;
     };
   }
 
-  // Remove lights 
+  // Remove lights
   function trimLights(value) {
     for (l = value; l <= scene.lights.length; l++) {
       light = scene.lights[l];
@@ -1862,7 +1862,7 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
 
   function update() {
     var v, vertex, offset = MESH.depth/100;
-    
+
     // Add depth to Vertices
     for (v = geometry.vertices.length - 1; v >= 0; v--) {
       vertex = geometry.vertices[v];
@@ -1968,10 +1968,10 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
     controller = lightFolder.add(LIGHT, 'count', 1, 7).listen();
     controller.step(1);
     controller.onChange(function(value) {
-      if (scene.lights.length !== value) { 
+      if (scene.lights.length !== value) {
         // If the value is more then the number of lights, add lights, otherwise delete lights from the scene
         if (value > scene.lights.length) {
-          addLight(); 
+          addLight();
         } else {
           trimLights(value);
         }
@@ -1990,7 +1990,7 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
       LIGHT.proxy.setPosition(LIGHT.proxy.position[0], value, LIGHT.proxy.position[2]);
     });
 
-    
+
 
     /* JQuery Block ****
 	** Two different binds called to allow for mouse-scroll modification of
@@ -2051,7 +2051,7 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
     controller.step(100);
     controller = exportFolder.add(EXPORT, 'export').name('export big');
     controller = exportFolder.add(EXPORT, 'exportCurrent').name('export this');
-    
+
   }
 
   function toggleEl(id) {
@@ -2077,27 +2077,27 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
 
   function onMouseMove(event) {
     if(LIGHT.pickedup){
-      LIGHT.xPos = event.x - renderer.width/2;
-      LIGHT.yPos = renderer.height/2 -event.y;
+      LIGHT.xPos = (event.x || event.clientX) - renderer.width/2;
+      LIGHT.yPos = renderer.height/2 - (event.y || event.clientY);
       LIGHT.proxy.setPosition(LIGHT.xPos, LIGHT.yPos, LIGHT.proxy.position[2]);
-    } 
+    }
   }
 
   // Hide the controls completely on pressing H
-  Mousetrap.bind('H', function() { 
+  Mousetrap.bind('H', function() {
     toggleEl('controls');
     toggleEl('links');
 
   });
 
   // Add a light on ENTER key
-  Mousetrap.bind('enter', function() { 
+  Mousetrap.bind('enter', function() {
     LIGHT.count++;
-    addLight(); 
+    addLight();
   });
 
   // Pick up the light when a space is pressed
-  Mousetrap.bind('space', function() { 
+  Mousetrap.bind('space', function() {
     LIGHT.pickedup = !LIGHT.pickedup;
   });
 
