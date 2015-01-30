@@ -1,0 +1,28 @@
+{
+  "name": "triangles",
+  "version": "0.0.1",
+  "description": "Delaunay triangulation + Lambertian reflectance",
+  "main": "triangles.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/msurguy/triangles.git"
+  },
+  "keywords": [
+    "triangles",
+    "msurguy",
+    "Delaunay",
+    "triangulation"
+  ],
+  "author": "Maksim Surguy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/msurguy/triangles/issues"
+  },
+  "homepage": "https://github.com/msurguy/triangles"
+}
