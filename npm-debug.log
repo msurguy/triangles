@@ -1,0 +1,26 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'run', 'build' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.34
+4 verbose run-script [ 'prebuild', 'build', 'postbuild' ]
+5 info prebuild triangles@0.0.2
+6 info build triangles@0.0.2
+7 verbose unsafe-perm in lifecycle true
+8 info triangles@0.0.2 Failed to exec build script
+9 error triangles@0.0.2 build: `npm run build-js && npm run bundle-js`
+9 error Exit status 1
+10 error Failed at the triangles@0.0.2 build script.
+10 error This is most likely a problem with the triangles package,
+10 error not with npm itself.
+10 error Tell the author that this fails on your system:
+10 error     npm run build-js && npm run bundle-js
+10 error You can get their info via:
+10 error     npm owner ls triangles
+10 error There is likely additional logging output above.
+11 error System Darwin 14.1.0
+12 error command "node" "/usr/local/bin/npm" "run" "build"
+13 error cwd /Users/airbender/Work/triangles
+14 error node -v v0.10.34
+15 error npm -v 1.4.28
+16 error code ELIFECYCLE
+17 verbose exit [ 1, true ]

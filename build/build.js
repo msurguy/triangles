@@ -5,9 +5,9 @@ var uglify = require('uglify-js');
 // Settings
 var FILE_ENCODING = 'utf-8',
     PROJECT_NAME  = 'triangles',
-    LICENSE       = '../LICENSE',
-    SOURCE_DIR    = '../source',
-    OUTPUT_DIR    = '../js',
+    LICENSE       = './LICENSE',
+    SOURCE_DIR    = './source',
+    OUTPUT_DIR    = './js',
     SCRIPTS       = [
         'delaunay.js',
         'mousetrap.js',
@@ -65,6 +65,5 @@ function process() {
 
     console.log('build complete');
 }
-
 // GO!
 process();

@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Delaunay triangle pattern maker</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+
+    <div id="container" class="container">
+      <div id="output" class="container"></div>
+    </div>
+    <div id="controls" class="controls">
+    </div>
+    <script src="./js/triangles.bundle.min.js"></script>
+
+    <script>
+
+        var triangles = require('/js/triangles.min.js');
+
+        triangles.init({
+          showControls: false,
+          track: false,
+          container: document.getElementById('container'),
+          output: document.getElementById('output')
+        });
+    </script>
+  </body>
+</html>
