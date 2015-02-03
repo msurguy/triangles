@@ -8,10 +8,15 @@
   },
   "dependencies": {
     "uglify-js": "~2.2.5",
-    "browserify": ""
+    "browserify": "latest"
+  },
+  "devDependencies": {
+    "browserify": "latest"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-js": "node ./build/build.js",
+    "bundle-js": "browserify -r ./js/triangles.min.js > ./js/triangles.bundle.min.js",
+    "build": "npm run build-js && npm run bundle-js"
   },
   "repository": {
     "type": "git",

@@ -47,11 +47,11 @@ Download this repository and run index.html in your browser or open [this link](
 
 Install Dependencies:
 
-    npm install uglify-js@2.2.5
+    npm install
 
-Build (cd into 'build' folder first):
+Build
 
-    node build.js
+    npm run build
 
 ## Inspiration
 
