@@ -160,7 +160,7 @@ var Delaunay;
        * array. */
       st = supertriangle(vertices);
       vertices.push(st[0], st[1], st[2]);
-
+      
       /* Initialize the open list (containing the supertriangle and nothing
        * else) and the closed list (which is empty since we havn't processed
        * any triangles yet). */
@@ -1576,8 +1576,7 @@ window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequest
 document.createElement("div");a.extend(this.domElement.style,{position:"fixed",display:"none",zIndex:"1001",opacity:0,WebkitTransition:"-webkit-transform 0.2s ease-out, opacity 0.2s linear"});document.body.appendChild(this.backgroundElement);document.body.appendChild(this.domElement);var c=this;e.bind(this.backgroundElement,"click",function(){c.hide()})};c.prototype.show=function(){var c=this;this.backgroundElement.style.display="block";this.domElement.style.display="block";this.domElement.style.opacity=
 0;this.domElement.style.webkitTransform="scale(1.1)";this.layout();a.defer(function(){c.backgroundElement.style.opacity=1;c.domElement.style.opacity=1;c.domElement.style.webkitTransform="scale(1)"})};c.prototype.hide=function(){var a=this,c=function(){a.domElement.style.display="none";a.backgroundElement.style.display="none";e.unbind(a.domElement,"webkitTransitionEnd",c);e.unbind(a.domElement,"transitionend",c);e.unbind(a.domElement,"oTransitionEnd",c)};e.bind(this.domElement,"webkitTransitionEnd",
 c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransitionEnd",c);this.backgroundElement.style.opacity=0;this.domElement.style.opacity=0;this.domElement.style.webkitTransform="scale(1.1)"};c.prototype.layout=function(){this.domElement.style.left=window.innerWidth/2-e.getWidth(this.domElement)/2+"px";this.domElement.style.top=window.innerHeight/2-e.getHeight(this.domElement)/2+"px"};return c}(dat.dom.dom,dat.utils.common),dat.dom.dom,dat.utils.common);
-(function(){
-
+module.exports = (function(self){
   //------------------------------
   // Mesh Properties
   //------------------------------
@@ -1746,16 +1745,40 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
   //------------------------------
   // Methods
   //------------------------------
-  function initialise() {
+  var init = function initialise(config) {
+    // override variables from config
+    config = config || { showControls: true, track: true };
+    if (config.props){
+      container = config.props.container || container;
+      controls = config.props.controls || controls;
+      output = config.props.output || output;
+    }
+
     createRenderer();
     createScene();
     createMesh();
     addLights();
-    addEventListeners();
-    addControls();
+    addEventListeners(config.track);
+    addControls(config.showControls);
     LIGHT.randomize();
     resize(container.offsetWidth, container.offsetHeight);
     animate();
+
+    // Hide the controls completely on pressing H
+    // Mousetrap.bind('H', function() {
+    //   toggleEl('controls');
+    // });
+
+    // Add a light on ENTER key
+    // Mousetrap.bind('enter', function() {
+    //   LIGHT.count++;
+    //   addLight();
+    // });
+
+    // Pick up the light when a space is pressed
+    // Mousetrap.bind('space', function() {
+    //   LIGHT.pickedup = !LIGHT.pickedup;
+    // });
   }
 
   function createRenderer() {
@@ -1878,18 +1901,19 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
     renderer.render(scene);
   }
 
-  function addEventListeners() {
+  function addEventListeners(track) {
     window.addEventListener('resize', onWindowResize);
-    container.addEventListener('mousemove', onMouseMove);
+    track && container.addEventListener('mousemove', onMouseMove);
   }
 
-  function addControls() {
+  function addControls(visible) {
     var i, l, light, folder, controller;
 
     // Create GUI
     gui = new dat.GUI({autoPlace:false});
-
-    controls.appendChild(gui.domElement);
+    if (visible){
+      controls.appendChild(gui.domElement);
+    }
 
     // Create folders
     renderFolder = gui.addFolder('Render');
@@ -1990,53 +2014,7 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
       LIGHT.proxy.setPosition(LIGHT.proxy.position[0], value, LIGHT.proxy.position[2]);
     });
 
-
-
-    /* JQuery Block ****
-	** Two different binds called to allow for mouse-scroll modification of
-	** z-offset. One of the binds handle specifically for Firefox,
-	** and the other handles for IE, Opera and Safari
-	** Works in: Opera, Safari, IE9+. and Chrome.
-	** NaN Error in Firefox.
-    */
-
     controller = lightFolder.add(LIGHT, 'zOffset', 0, 1000).name('Distance').listen();
-	scrollButtonDistance = Number(LIGHT.proxy.position[2]);
-	//Firefox
-	$('#container').bind('DOMMouseScroll', function(e) {
-		if(e.originalEvent.detail > 0) {
-		 scrollButtonDistance = Number(Math.max(0, scrollButtonDistance - e.detail/4));
-		} else {
-		 scrollButtonDistance =  Number(Math.min(1000, scrollButtonDistance - e.detail/4));
-		}
-
-		LIGHT.proxy.setPosition(LIGHT.proxy.position[0], LIGHT.proxy.position[1], scrollButtonDistance);
-		 LIGHT.zOffset = scrollButtonDistance;
-		LIGHT.z = scrollButtonDistance;
-		gui.__folders.Light.__controllers[1].updateDisplay();
-		gui.__folders.Light.__controllers[2].updateDisplay();
-		return false;
-	});
-
-	//IE, Opera, Safari
-	$('#container').bind('mousewheel', function(e) {
-		if(e.originalEvent.wheelDelta < 0) {
-		 scrollButtonDistance =  Number(Math.max(0, scrollButtonDistance + e.originalEvent.wheelDelta/4));
-		} else {
-		 scrollButtonDistance = Number(Math.min(1000, scrollButtonDistance + e.originalEvent.wheelDelta/4));
-		}
-
-		LIGHT.proxy.setPosition(Number(LIGHT.proxy.position[0]), Number(LIGHT.proxy.position[1]), scrollButtonDistance);
-		LIGHT.zOffset = scrollButtonDistance;
-		LIGHT.z = scrollButtonDistance;
-		gui.__folders.Light.__controllers[1].updateDisplay();
-		gui.__folders.Light.__controllers[2].updateDisplay();
-
-		return false;
-	});
-
-	/* End JQuery Block */
-
     controller.step(1);
     controller.onChange(function(value) {
       LIGHT.proxy.setPosition(LIGHT.proxy.position[0], LIGHT.proxy.position[1], value);
@@ -2077,31 +2055,11 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
 
   function onMouseMove(event) {
     if(LIGHT.pickedup){
-      LIGHT.xPos = (event.x || event.clientX) - renderer.width/2;
-      LIGHT.yPos = renderer.height/2 - (event.y || event.clientY);
+      LIGHT.xPos = event.x - renderer.width/2;
+      LIGHT.yPos = renderer.height/2 -event.y;
       LIGHT.proxy.setPosition(LIGHT.xPos, LIGHT.yPos, LIGHT.proxy.position[2]);
     }
   }
 
-  // Hide the controls completely on pressing H
-  Mousetrap.bind('H', function() {
-    toggleEl('controls');
-    toggleEl('links');
-
-  });
-
-  // Add a light on ENTER key
-  Mousetrap.bind('enter', function() {
-    LIGHT.count++;
-    addLight();
-  });
-
-  // Pick up the light when a space is pressed
-  Mousetrap.bind('space', function() {
-    LIGHT.pickedup = !LIGHT.pickedup;
-  });
-
-  // Let there be light!
-  initialise();
-
-})();
+  return {init: init};
+})(this);

@@ -1,5 +1,4 @@
-(function(){
-
+module.exports = (function(self){
   //------------------------------
   // Mesh Properties
   //------------------------------
@@ -168,16 +167,40 @@
   //------------------------------
   // Methods
   //------------------------------
-  function initialise() {
+  var init = function initialise(config) {
+    // override variables from config
+    config = config || { showControls: true, track: true };
+    if (config.props){
+      container = config.props.container || container;
+      controls = config.props.controls || controls;
+      output = config.props.output || output;
+    }
+
     createRenderer();
     createScene();
     createMesh();
     addLights();
-    addEventListeners();
-    addControls();
+    addEventListeners(config.track);
+    addControls(config.showControls);
     LIGHT.randomize();
     resize(container.offsetWidth, container.offsetHeight);
     animate();
+
+    // Hide the controls completely on pressing H
+    // Mousetrap.bind('H', function() {
+    //   toggleEl('controls');
+    // });
+
+    // Add a light on ENTER key
+    // Mousetrap.bind('enter', function() {
+    //   LIGHT.count++;
+    //   addLight();
+    // });
+
+    // Pick up the light when a space is pressed
+    // Mousetrap.bind('space', function() {
+    //   LIGHT.pickedup = !LIGHT.pickedup;
+    // });
   }
 
   function createRenderer() {
@@ -249,14 +272,14 @@
 
   function addLights() {
     var num = Math.floor(Math.random() * 4) + 1;
-    
+
     for (var i = num - 1; i >= 0; i--) {
       addLight();
       LIGHT.count++;
     };
   }
 
-  // Remove lights 
+  // Remove lights
   function trimLights(value) {
     for (l = value; l <= scene.lights.length; l++) {
       light = scene.lights[l];
@@ -284,7 +307,7 @@
 
   function update() {
     var v, vertex, offset = MESH.depth/100;
-    
+
     // Add depth to Vertices
     for (v = geometry.vertices.length - 1; v >= 0; v--) {
       vertex = geometry.vertices[v];
@@ -300,18 +323,19 @@
     renderer.render(scene);
   }
 
-  function addEventListeners() {
+  function addEventListeners(track) {
     window.addEventListener('resize', onWindowResize);
-    container.addEventListener('mousemove', onMouseMove);
+    track && container.addEventListener('mousemove', onMouseMove);
   }
 
-  function addControls() {
+  function addControls(visible) {
     var i, l, light, folder, controller;
 
     // Create GUI
     gui = new dat.GUI({autoPlace:false});
-
-    controls.appendChild(gui.domElement);
+    if (visible){
+      controls.appendChild(gui.domElement);
+    }
 
     // Create folders
     renderFolder = gui.addFolder('Render');
@@ -390,10 +414,10 @@
     controller = lightFolder.add(LIGHT, 'count', 1, 7).listen();
     controller.step(1);
     controller.onChange(function(value) {
-      if (scene.lights.length !== value) { 
+      if (scene.lights.length !== value) {
         // If the value is more then the number of lights, add lights, otherwise delete lights from the scene
         if (value > scene.lights.length) {
-          addLight(); 
+          addLight();
         } else {
           trimLights(value);
         }
@@ -427,7 +451,7 @@
     controller.step(100);
     controller = exportFolder.add(EXPORT, 'export').name('export big');
     controller = exportFolder.add(EXPORT, 'exportCurrent').name('export this');
-    
+
   }
 
   function toggleEl(id) {
@@ -456,28 +480,8 @@
       LIGHT.xPos = event.x - renderer.width/2;
       LIGHT.yPos = renderer.height/2 -event.y;
       LIGHT.proxy.setPosition(LIGHT.xPos, LIGHT.yPos, LIGHT.proxy.position[2]);
-    } 
+    }
   }
 
-  // Hide the controls completely on pressing H
-  Mousetrap.bind('H', function() { 
-    toggleEl('controls');
-    toggleEl('links');
-
-  });
-
-  // Add a light on ENTER key
-  Mousetrap.bind('enter', function() { 
-    LIGHT.count++;
-    addLight(); 
-  });
-
-  // Pick up the light when a space is pressed
-  Mousetrap.bind('space', function() { 
-    LIGHT.pickedup = !LIGHT.pickedup;
-  });
-
-  // Let there be light!
-  initialise();
-
-})();
+  return {init: init};
+})(this);
