@@ -1,6 +1,6 @@
 {
   "name": "triangles",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Triangle background generator",
   "main": "js/triangles.min.js",
   "directories": {
