@@ -9,6 +9,7 @@ var FILE_ENCODING = 'utf-8',
     SOURCE_DIR    = '../source',
     OUTPUT_DIR    = '../js',
     SCRIPTS       = [
+        'FileSaver.js',
         'delaunay.js',
         'mousetrap.js',
         'prefixfree.js',

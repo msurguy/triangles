@@ -23,6 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 **/
+/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
+var saveAs=saveAs||function(e){"use strict";if(typeof e==="undefined"||typeof navigator!=="undefined"&&/MSIE [1-9]\./.test(navigator.userAgent)){return}var t=e.document,n=function(){return e.URL||e.webkitURL||e},r=t.createElementNS("http://www.w3.org/1999/xhtml","a"),o="download"in r,a=function(e){var t=new MouseEvent("click");e.dispatchEvent(t)},i=/constructor/i.test(e.HTMLElement)||e.safari,f=/CriOS\/[\d]+/.test(navigator.userAgent),u=function(t){(e.setImmediate||e.setTimeout)(function(){throw t},0)},s="application/octet-stream",d=1e3*40,c=function(e){var t=function(){if(typeof e==="string"){n().revokeObjectURL(e)}else{e.remove()}};setTimeout(t,d)},l=function(e,t,n){t=[].concat(t);var r=t.length;while(r--){var o=e["on"+t[r]];if(typeof o==="function"){try{o.call(e,n||e)}catch(a){u(a)}}}},p=function(e){if(/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)){return new Blob([String.fromCharCode(65279),e],{type:e.type})}return e},v=function(t,u,d){if(!d){t=p(t)}var v=this,w=t.type,m=w===s,y,h=function(){l(v,"writestart progress write writeend".split(" "))},S=function(){if((f||m&&i)&&e.FileReader){var r=new FileReader;r.onloadend=function(){var t=f?r.result:r.result.replace(/^data:[^;]*;/,"data:attachment/file;");var n=e.open(t,"_blank");if(!n)e.location.href=t;t=undefined;v.readyState=v.DONE;h()};r.readAsDataURL(t);v.readyState=v.INIT;return}if(!y){y=n().createObjectURL(t)}if(m){e.location.href=y}else{var o=e.open(y,"_blank");if(!o){e.location.href=y}}v.readyState=v.DONE;h();c(y)};v.readyState=v.INIT;if(o){y=n().createObjectURL(t);setTimeout(function(){r.href=y;r.download=u;a(r);h();c(y);v.readyState=v.DONE});return}S()},w=v.prototype,m=function(e,t,n){return new v(e,t||e.name||"download",n)};if(typeof navigator!=="undefined"&&navigator.msSaveOrOpenBlob){return function(e,t,n){t=t||e.name||"download";if(!n){e=p(e)}return navigator.msSaveOrOpenBlob(e,t)}}w.abort=function(){};w.readyState=w.INIT=0;w.WRITING=1;w.DONE=2;w.error=w.onwritestart=w.onprogress=w.onwrite=w.onabort=w.onerror=w.onwriteend=null;return m}(typeof self!=="undefined"&&self||typeof window!=="undefined"&&window||this.content);if(typeof module!=="undefined"&&module.exports){module.exports.saveAs=saveAs}else if(typeof define!=="undefined"&&define!==null&&define.amd!==null){define("FileSaver.js",function(){return saveAs})}
 var Delaunay;
 
 (function() {
@@ -160,7 +162,7 @@ var Delaunay;
        * array. */
       st = supertriangle(vertices);
       vertices.push(st[0], st[1], st[2]);
-
+      
       /* Initialize the open list (containing the supertriangle and nothing
        * else) and the closed list (which is empty since we havn't processed
        * any triangles yet). */
@@ -1663,15 +1665,18 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
     exportCurrent: function(){
       switch(RENDER.renderer) {
         case WEBGL:
-          window.open(webglRenderer.element.toDataURL(), '_blank');
+          webglRenderer.element.toBlob(function (canvasContentBlob) {
+                  saveAs( canvasContentBlob, 'triangles-download.png');
+                }, 'image/png');
           break;
         case CANVAS:
-          window.open(canvasRenderer.element.toDataURL(), '_blank');
+          canvasRenderer.element.toBlob(function (canvasContentBlob) {
+                saveAs( canvasContentBlob, 'triangles-download.png');
+              }, 'image/png');
           break;
         case SVG:
-          var data = encodeURIComponent(output.innerHTML);
-          var url = "data:image/svg+xml," + data;
-          window.open(url, '_blank');
+          var blob = new Blob([output.innerHTML], {type: "image/svg+xml"});
+          saveAs(blob, "triangles-download.svg");
           break;
       }
     },
@@ -1707,15 +1712,18 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
 
       switch(RENDER.renderer) {
         case WEBGL:
-          window.open(webglRenderer.element.toDataURL(), '_blank');
+          webglRenderer.element.toBlob(function (canvasContentBlob) {
+                  saveAs( canvasContentBlob, 'triangles-download.png');
+                }, 'image/png');
           break;
         case CANVAS:
-          window.open(canvasRenderer.element.toDataURL(), '_blank');
+          canvasRenderer.element.toBlob(function (canvasContentBlob) {
+                saveAs( canvasContentBlob, 'triangles-download.png');
+              }, 'image/png');
           break;
         case SVG:
-          var data = encodeURIComponent(output.innerHTML);
-          var url = "data:image/svg+xml," + data;
-          window.open(url, '_blank');
+          var blob = new Blob([output.innerHTML], {type: "image/svg+xml"});
+          saveAs(blob, "triangles-download.svg");
           break;
       }
 
@@ -1827,14 +1835,14 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
 
   function addLights() {
     var num = Math.floor(Math.random() * 4) + 1;
-
+    
     for (var i = num - 1; i >= 0; i--) {
       addLight();
       LIGHT.count++;
     };
   }
 
-  // Remove lights
+  // Remove lights 
   function trimLights(value) {
     for (l = value; l <= scene.lights.length; l++) {
       light = scene.lights[l];
@@ -1862,7 +1870,7 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
 
   function update() {
     var v, vertex, offset = MESH.depth/100;
-
+    
     // Add depth to Vertices
     for (v = geometry.vertices.length - 1; v >= 0; v--) {
       vertex = geometry.vertices[v];
@@ -1968,10 +1976,10 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
     controller = lightFolder.add(LIGHT, 'count', 1, 7).listen();
     controller.step(1);
     controller.onChange(function(value) {
-      if (scene.lights.length !== value) {
+      if (scene.lights.length !== value) { 
         // If the value is more then the number of lights, add lights, otherwise delete lights from the scene
         if (value > scene.lights.length) {
-          addLight();
+          addLight(); 
         } else {
           trimLights(value);
         }
@@ -1990,53 +1998,7 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
       LIGHT.proxy.setPosition(LIGHT.proxy.position[0], value, LIGHT.proxy.position[2]);
     });
 
-
-
-    /* JQuery Block ****
-	** Two different binds called to allow for mouse-scroll modification of
-	** z-offset. One of the binds handle specifically for Firefox,
-	** and the other handles for IE, Opera and Safari
-	** Works in: Opera, Safari, IE9+. and Chrome.
-	** NaN Error in Firefox.
-    */
-
     controller = lightFolder.add(LIGHT, 'zOffset', 0, 1000).name('Distance').listen();
-	scrollButtonDistance = Number(LIGHT.proxy.position[2]);
-	//Firefox
-	$('#container').bind('DOMMouseScroll', function(e) {
-		if(e.originalEvent.detail > 0) {
-		 scrollButtonDistance = Number(Math.max(0, scrollButtonDistance - e.detail/4));
-		} else {
-		 scrollButtonDistance =  Number(Math.min(1000, scrollButtonDistance - e.detail/4));
-		}
-
-		LIGHT.proxy.setPosition(LIGHT.proxy.position[0], LIGHT.proxy.position[1], scrollButtonDistance);
-		 LIGHT.zOffset = scrollButtonDistance;
-		LIGHT.z = scrollButtonDistance;
-		gui.__folders.Light.__controllers[1].updateDisplay();
-		gui.__folders.Light.__controllers[2].updateDisplay();
-		return false;
-	});
-
-	//IE, Opera, Safari
-	$('#container').bind('mousewheel', function(e) {
-		if(e.originalEvent.wheelDelta < 0) {
-		 scrollButtonDistance =  Number(Math.max(0, scrollButtonDistance + e.originalEvent.wheelDelta/4));
-		} else {
-		 scrollButtonDistance = Number(Math.min(1000, scrollButtonDistance + e.originalEvent.wheelDelta/4));
-		}
-
-		LIGHT.proxy.setPosition(Number(LIGHT.proxy.position[0]), Number(LIGHT.proxy.position[1]), scrollButtonDistance);
-		LIGHT.zOffset = scrollButtonDistance;
-		LIGHT.z = scrollButtonDistance;
-		gui.__folders.Light.__controllers[1].updateDisplay();
-		gui.__folders.Light.__controllers[2].updateDisplay();
-
-		return false;
-	});
-
-	/* End JQuery Block */
-
     controller.step(1);
     controller.onChange(function(value) {
       LIGHT.proxy.setPosition(LIGHT.proxy.position[0], LIGHT.proxy.position[1], value);
@@ -2051,7 +2013,7 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
     controller.step(100);
     controller = exportFolder.add(EXPORT, 'export').name('export big');
     controller = exportFolder.add(EXPORT, 'exportCurrent').name('export this');
-
+    
   }
 
   function toggleEl(id) {
@@ -2077,27 +2039,27 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
 
   function onMouseMove(event) {
     if(LIGHT.pickedup){
-      LIGHT.xPos = (event.x || event.clientX) - renderer.width/2;
-      LIGHT.yPos = renderer.height/2 - (event.y || event.clientY);
+      LIGHT.xPos = event.x - renderer.width/2;
+      LIGHT.yPos = renderer.height/2 -event.y;
       LIGHT.proxy.setPosition(LIGHT.xPos, LIGHT.yPos, LIGHT.proxy.position[2]);
-    }
+    } 
   }
 
   // Hide the controls completely on pressing H
-  Mousetrap.bind('H', function() {
+  Mousetrap.bind('H', function() { 
     toggleEl('controls');
     toggleEl('links');
 
   });
 
   // Add a light on ENTER key
-  Mousetrap.bind('enter', function() {
+  Mousetrap.bind('enter', function() { 
     LIGHT.count++;
-    addLight();
+    addLight(); 
   });
 
   // Pick up the light when a space is pressed
-  Mousetrap.bind('space', function() {
+  Mousetrap.bind('space', function() { 
     LIGHT.pickedup = !LIGHT.pickedup;
   });
 
