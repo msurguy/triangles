@@ -85,15 +85,18 @@
     exportCurrent: function(){
       switch(RENDER.renderer) {
         case WEBGL:
-          window.open(webglRenderer.element.toDataURL(), '_blank');
+          webglRenderer.element.toBlob(function (canvasContentBlob) {
+                  saveAs( canvasContentBlob, 'triangles-download.png');
+                }, 'image/png');
           break;
         case CANVAS:
-          window.open(canvasRenderer.element.toDataURL(), '_blank');
+          canvasRenderer.element.toBlob(function (canvasContentBlob) {
+                saveAs( canvasContentBlob, 'triangles-download.png');
+              }, 'image/png');
           break;
         case SVG:
-          var data = encodeURIComponent(output.innerHTML);
-          var url = "data:image/svg+xml," + data;
-          window.open(url, '_blank');
+          var blob = new Blob([output.innerHTML], {type: "image/svg+xml"});
+          saveAs(blob, "triangles-download.svg");
           break;
       }
     },
@@ -129,15 +132,18 @@
 
       switch(RENDER.renderer) {
         case WEBGL:
-          window.open(webglRenderer.element.toDataURL(), '_blank');
+          webglRenderer.element.toBlob(function (canvasContentBlob) {
+                  saveAs( canvasContentBlob, 'triangles-download.png');
+                }, 'image/png');
           break;
         case CANVAS:
-          window.open(canvasRenderer.element.toDataURL(), '_blank');
+          canvasRenderer.element.toBlob(function (canvasContentBlob) {
+                saveAs( canvasContentBlob, 'triangles-download.png');
+              }, 'image/png');
           break;
         case SVG:
-          var data = encodeURIComponent(output.innerHTML);
-          var url = "data:image/svg+xml," + data;
-          window.open(url, '_blank');
+          var blob = new Blob([output.innerHTML], {type: "image/svg+xml"});
+          saveAs(blob, "triangles-download.svg");
           break;
       }
 

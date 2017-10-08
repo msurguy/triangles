@@ -1,0 +1,27 @@
+{
+  "name": "triangles",
+  "version": "1.0.0",
+  "description": "Triangle background generator",
+  "main": "js/triangles.min.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msurguy/triangles.git"
+  },
+  "keywords": [
+    "triangles",
+    "generator",
+    "delaunay"
+  ],
+  "author": "Maks Surguy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/msurguy/triangles/issues"
+  },
+  "homepage": "https://github.com/msurguy/triangles#readme"
+}
