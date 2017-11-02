@@ -1,39 +1,55 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8"/>
-    <title>Delaunay triangle pattern maker</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    
-      ga('create', 'UA-50134907-1', 'msurguy.github.io');
-      ga('send', 'pageview');
-    
-    </script>
-  </head>
-  <body>
-    
-    <div id="container" class="container">
-      <div id="output" class="container">
-      </div>
-      <ul id="links" class="links">
-        <p>Press space to drop or pick up the light. Enter key to add another one</p>
-        <li><a class="who" href="http://twitter.com/msurguy" target="_blank">by msurguy</a></li>
-        <li><a class="blog" href="http://maxoffsky.com/maxoffsky-blog/free-wallpapers-generator-delaunay-triangulation-patterns/" target="_blank">Blog post</a></li>
-        <li><a class="source" href="https://github.com/msurguy/triangles" target="_blank">Source</a></li>
-      </ul>
-
-    </div>
-    <div id="controls" class="controls">
-    </div>
-    
-    <script src="js/triangles.min.js"></script>
-
-  </body>
-</html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=Edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Triangles</title><style>*{box-sizing:border-box}.cxs-display-table{display:table}.cxs-183745076 pre .hljs-number{color:#ff4081}.cxs-3954183383{font-size:24px}.cxs-183745076 a:hover{text-decoration:underline}.cxs-4066908388{clear:both}.cxs-799160745{font-size:48px}.cxs-1246195080{margin-left:-8px;margin-right:-8px}.cxs-183745076{}.cxs-183745076 h1{font-weight:500;letter-spacing:-0.01em;font-size:48px;margin-top:32px;margin-bottom:8px}.cxs-183745076 h2{font-weight:500;letter-spacing:-0.01em;font-size:24px;margin-top:32px;margin-bottom:8px}.cxs-183745076 h3{font-weight:500;letter-spacing:-0.01em;font-size:20px;margin-top:32px;margin-bottom:8px}.cxs-183745076 h4{font-weight:500;letter-spacing:-0.01em;font-size:16px;margin-top:32px;margin-bottom:8px}.cxs-183745076 h5{font-weight:500;letter-spacing:-0.01em;font-size:14px;margin-top:32px;margin-bottom:8px}.cxs-183745076 h6{font-weight:500;letter-spacing:-0.01em;font-size:12px;margin-top:32px;margin-bottom:8px}.cxs-183745076 p{overflow-x:auto;margin-top:0px;margin-bottom:16px}.cxs-183745076 code{font-family:Menlo, monospace;font-size:14px;padding:4px;background-color:#f5f5f5;border-radius:2px}.cxs-183745076 pre{font-family:Menlo, monospace;font-size:14px;overflow-x:auto;padding:16px;margin-top:8px;margin-bottom:32px;background-color:#f5f5f5;border-radius:2px}.cxs-183745076 pre .hljs-keyword{color:#2196f3}.cxs-183745076 pre .hljs-built_in{color:#1565c0}.cxs-183745076 pre .hljs-type{color:#1565c0}.cxs-183745076 pre .hljs-literal{color:#2196f3}.cxs-183745076 a{color:#2196f3;text-decoration: none}.cxs-183745076 pre .hljs-regexp{color:#2196f3}.cxs-183745076 pre .hljs-string{color:#1565c0}.cxs-183745076 pre .hljs-subst{color:#1565c0}.cxs-183745076 pre .hljs-symbol{color:#2196f3}.cxs-183745076 pre .hljs-class{color:#2196f3}.cxs-183745076 pre .hljs-function{color:#ff4081}.cxs-183745076 pre .hljs-title{color:#2196f3}.cxs-183745076 pre .hljs-params{color:#1565c0}.cxs-183745076 pre .hljs-comment{color:#1565c0}.cxs-183745076 pre .hljs-doctag{color:#1565c0}.cxs-183745076 pre .hljs-meta{color:#1565c0}.cxs-183745076 pre .hljs-meta-keyword{color:#2196f3}.cxs-183745076 pre .hljs-meta-string{color:#2196f3}.cxs-183745076 hr{margin-top:48px;margin-bottom:48px;border:0px;border-bottom-style:solid;border-bottom-width:1px;border-bottom:2px solid #e0e0e0}.cxs-183745076 table{border-collapse:separate;border-spacing:0px;max-width:100%;width:100%}.cxs-183745076 th{text-align:left;line-height:inherit;vertical-align:bottom}.cxs-183745076 td{vertical-align:top;line-height:inherit}.cxs-183745076 img{max-width: 100%;height: auto;margin-top:16px;margin-bottom:16px}.cxs-183745076 ul{padding-left:32px;margin-top:0px;margin-bottom:16px}@media screen and (min-width: 52em) { .cxs-799160745{font-size:72px} }@media screen and (min-width: 52em) { .cxs-3954183383{} }</style><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,,500"/></head><body style="margin:0;"><div class="Xv" style="font-family:Roboto, sans-serif;font-weight:400;line-height:1.5;color:#212121;background-color:#fff;"><nav style="position:relative;margin-bottom:-48px;display:flex;align-items:center;padding-left:16px;padding-right:16px;color:#fff;"><a href="https://msurguy.github.io/triangles/" class="Link" style="box-sizing:border-box;color:inherit;display:inline-block;font-size:14px;line-height:16px;padding-left:16px;padding-right:16px;padding-top:16px;padding-bottom:16px;font-weight:600;text-decoration:none;margin-right:8px;">Home</a><a href="https://github.com/msurguy/triangles" class="Link" style="box-sizing:border-box;color:inherit;display:inline-block;font-size:14px;line-height:16px;padding-left:16px;padding-right:16px;padding-top:16px;padding-bottom:16px;font-weight:600;text-decoration:none;margin-right:8px;">GitHub</a><a href="https://npmjs.com/package/triangles" class="Link" style="box-sizing:border-box;color:inherit;display:inline-block;font-size:14px;line-height:16px;padding-left:16px;padding-right:16px;padding-top:16px;padding-bottom:16px;font-weight:600;text-decoration:none;margin-right:8px;">npm</a></nav><header class="BannerHeader" style="display:flex;align-items:center;justify-content:center;text-align:center;min-height:80vh;color:white;background-color:#212121;background-image:linear-gradient(45deg, #2196f3, #ff4081);background-size:cover;background-position:center;"><div style="box-sizing:border-box;width:100%;max-width:896px;margin-left:auto;margin-right:auto;padding-top:48px;padding-bottom:48px;padding-left:32px;padding-right:32px;"><h1 class="cxs-799160745" style="box-sizing:border-box;font-weight:500;letter-spacing:-0.01em;margin:0;">triangles</h1><h2 class="cxs-3954183383" style="box-sizing:border-box;font-weight:500;letter-spacing:-0.01em;margin:0;">Delaunay triangulation + Lambertian reflectance</h2><p class="Text" style="box-sizing:border-box;font-size:20px;margin:0;">v1.0.2</p><div class="cxs-1246195080" style="box-sizing:border-box;padding-top:16px;padding-bottom:16px;"><iframe src="https://platform.twitter.com/widgets/tweet_button.html?text=triangles%3A%20Delaunay%20triangulation%20%2B%20Lambertian%20reflectance&amp;url=https%3A%2F%2Fmsurguy.github.io%2Ftriangles%2F&amp;via=&amp;hashtags=&amp;size=" height="20" allowtransparency="true" frameborder="0" scrolling="no" style="box-sizing:border-box;width:61px;overflow:hidden;margin:8px;"></iframe><iframe src="https://ghbtns.com/github-btn.html?type=star&amp;count=true&amp;user=msurguy&amp;repo=triangles&amp;size=" height="20" frameborder="0" scrolling="no" style="box-sizing:border-box;width:100px;overflow:hidden;margin:8px;"></iframe><div class="cxs-4066908388 cxs-display-table"></div></div></div></header><div class="cxs-183745076" style="box-sizing:border-box;max-width:896px;margin-left:auto;margin-right:auto;padding-top:32px;padding-bottom:32px;padding-left:32px;padding-right:32px;"><article style="box-sizing:border-box;"><div><h1>Delaunay Triangulation pattern maker</h1>
+<p>This project allows you to create beautiful high quality images featuring a nice pattern created from Delaunay triangulation and applying a flat surface shader. These images could be used for:</p>
+<ul>
+<li>Wallpapers</li>
+<li>Blog post headers</li>
+<li>Magazines</li>
+<li>Posters</li>
+<li>And more</li>
+</ul>
+<p>The tool provides export to PNG and SVG formats. With SVG format you could create an image of virtually any size, even as big as a billboard. Go crazy with it!</p>
+<h2>Show me some results!</h2>
+<p>Here are a few of most obvious uses for the tool:</p>
+<p><img src="https://raw.github.com/msurguy/triangles/master/examples/three-devices.png" />
+<img src="https://raw.github.com/msurguy/triangles/master/examples/two-devices.png" />
+<img src="https://raw.github.com/msurguy/triangles/master/examples/billboard.png" /></p>
+<p>And I made a video on Youtube of the tool in action, creating 11 wallpapers in under 7 minutes:
+<a href="http://www.youtube.com/watch?v=JbD-HsmBt_0"><img src="http://img.youtube.com/vi/JbD-HsmBt_0/0.jpg" /></a></p>
+<p>You can also see some examples of the patterns made with this tool in this repository in the examples folder (the first one had text overlay added in Photoshop):</p>
+<p><img src="https://raw.github.com/msurguy/triangles/master/examples/0.jpg" />
+<img src="https://raw.github.com/msurguy/triangles/master/examples/1.jpg" />
+<img src="https://raw.github.com/msurguy/triangles/master/examples/2.jpg" />
+<img src="https://raw.github.com/msurguy/triangles/master/examples/3.jpg" />
+<img src="https://raw.github.com/msurguy/triangles/master/examples/4.jpg" />
+<img src="https://raw.github.com/msurguy/triangles/master/examples/5.jpg" />
+<img src="https://raw.github.com/msurguy/triangles/master/examples/6.jpg" />
+<img src="https://raw.github.com/msurguy/triangles/master/examples/7.jpg" /></p>
+<h2>Using</h2>
+<ul>
+<li>To add a new light press Enter key on your keyboard or increase count manually via the slider.</li>
+<li>To &quot;drop&quot; or &quot;pick up&quot; the currently selected light, press Space bar.</li>
+<li>To change colors of the lights, change the ambient and diffuse color controls.</li>
+<li>To export as SVG select SVG in the &quot;renderer&quot; panel and then export the image via &quot;Export big&quot; button. Then navigate to &quot;File -&gt; Save as&quot; in the browser's menu to save the resulting image to your computer.</li>
+</ul>
+<h2>Running</h2>
+<p>Download this repository and run index.html in your browser or open <a href="http://msurguy.github.com/triangles/">this link</a>.</p>
+<h2>Building</h2>
+<p>Install Dependencies:</p>
+<pre><span class="hljs-selector-tag">npm</span> <span class="hljs-selector-tag">install</span> <span class="hljs-selector-tag">uglify-js</span>@<span class="hljs-keyword">2</span>.<span class="hljs-keyword">2</span>.<span class="hljs-keyword">5</span></pre><p>Build (cd into 'build' folder first):</p>
+<pre><span class="hljs-keyword">node</span> <span class="hljs-title">build</span>.js</pre><h2>Inspiration</h2>
+<p>The iOS game called &quot;<a href="http://www.monumentvalleygame.com/">Monument Valley</a>&quot; by <a href="http://ustwo.com/">ustwo</a> served as an inspiration for this project. Specifically the simulation of the ocean in the game.</p>
+<h2>Acknowledgments</h2>
+<p>The shader work was done by Matthew Wagerfield on his MIT-licensed <a href="https://github.com/wagerfield/flat-surface-shader">repository</a>.</p>
+<h2>Author</h2>
+<p>Maksim Surguy <a href="http://twitter.com/msurguy">@msurguy</a></p>
+<h2>TODO</h2>
+<p>There are a few things that can be improved to make this tool even better.</p>
+<ul>
+<li>Add varying depth of the vertices of the triangles (Done as of 4/15/2014)</li>
+<li>Add more color variation and presets (Done as of 4/25/2014 with the randomizer functionality)</li>
+<li>Add text overlay and customizer for text</li>
+</ul>
+<p>If you can do any of these things - feel free to make a pull request!</p>
+<h2>License</h2>
+<p>Licensed under <a href="http://www.opensource.org/licenses/mit-license.php">MIT</a>. Enjoy.</p>
+</div></article></div><footer><div style="box-sizing:border-box;max-width:896px;margin-left:auto;margin-right:auto;margin-bottom:32px;padding-top:8px;padding-bottom:8px;padding-left:32px;padding-right:32px;"><div style="margin-left:-16px;margin-right:-16px;"><a href="https://github.com/msurguy/triangles" class="Link" style="box-sizing:border-box;color:inherit;display:inline-block;font-size:14px;line-height:16px;padding-left:16px;padding-right:16px;padding-top:16px;padding-bottom:16px;font-weight:600;text-decoration:none;">GitHub</a><a href="https://github.com/msurguy" class="Link" style="box-sizing:border-box;color:inherit;display:inline-block;font-size:14px;line-height:16px;padding-left:16px;padding-right:16px;padding-top:16px;padding-bottom:16px;font-weight:600;text-decoration:none;">msurguy</a></div><div></div></div></footer></div><div style="font-family:-apple-system, sans-serif;font-size:12px;font-weight:600;text-align:right;padding:24px;color:#333;background-color:#eee;"><a href="http://compositor.io" style="color:inherit;text-decoration:none;">Built with Compositor.io</a></div></body></html>
