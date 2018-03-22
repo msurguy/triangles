@@ -2,6 +2,8 @@
 var fs = require('fs');
 var uglify = require('uglify-js');
 
+console.log(uglify);
+
 // Settings
 var FILE_ENCODING = 'utf-8',
     PROJECT_NAME  = 'triangles',
@@ -9,9 +11,7 @@ var FILE_ENCODING = 'utf-8',
     SOURCE_DIR    = '../source',
     OUTPUT_DIR    = '../js',
     SCRIPTS       = [
-        'FileSaver.js',
         'delaunay.js',
-        'mousetrap.js',
         'prefixfree.js',
         'Core.js',
         'Math.js',
@@ -31,8 +31,7 @@ var FILE_ENCODING = 'utf-8',
         'CanvasRenderer.js',
         'WebGLRenderer.js',
         'SVGRenderer.js',
-        'dat.gui.js',
-        'script.js'
+        'Triangles.js'
     ];
 
 // Returns a path string from a list of path segments
@@ -56,7 +55,7 @@ function process() {
     unminified = license + '\n' + joined;
 
     // Minified
-    minified = license + uglify.minify(joined, {fromString: true}).code;
+    minified = license + uglify.minify(joined).code;
 
     // Write out the concatenated file
     fs.writeFileSync(getPath(OUTPUT_DIR, PROJECT_NAME + '.js'), unminified, FILE_ENCODING);
