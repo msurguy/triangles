@@ -1,4 +1,11 @@
 /**
+
+Copyright (c) 2018 Maksim Surguy and Max Karpawich
+Licensed under the MIT License (MIT)
+
+**/
+
+/**
  * dat-gui JavaScript Controller Library
  * http://code.google.com/p/dat-gui
  *
@@ -92,3 +99,245 @@ window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequest
 document.createElement("div");a.extend(this.domElement.style,{position:"fixed",display:"none",zIndex:"1001",opacity:0,WebkitTransition:"-webkit-transform 0.2s ease-out, opacity 0.2s linear"});document.body.appendChild(this.backgroundElement);document.body.appendChild(this.domElement);var c=this;e.bind(this.backgroundElement,"click",function(){c.hide()})};c.prototype.show=function(){var c=this;this.backgroundElement.style.display="block";this.domElement.style.display="block";this.domElement.style.opacity=
 0;this.domElement.style.webkitTransform="scale(1.1)";this.layout();a.defer(function(){c.backgroundElement.style.opacity=1;c.domElement.style.opacity=1;c.domElement.style.webkitTransform="scale(1)"})};c.prototype.hide=function(){var a=this,c=function(){a.domElement.style.display="none";a.backgroundElement.style.display="none";e.unbind(a.domElement,"webkitTransitionEnd",c);e.unbind(a.domElement,"transitionend",c);e.unbind(a.domElement,"oTransitionEnd",c)};e.bind(this.domElement,"webkitTransitionEnd",
 c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransitionEnd",c);this.backgroundElement.style.opacity=0;this.domElement.style.opacity=0;this.domElement.style.webkitTransform="scale(1.1)"};c.prototype.layout=function(){this.domElement.style.left=window.innerWidth/2-e.getWidth(this.domElement)/2+"px";this.domElement.style.top=window.innerHeight/2-e.getHeight(this.domElement)/2+"px"};return c}(dat.dom.dom,dat.utils.common),dat.dom.dom,dat.utils.common);
+
+/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
+var saveAs=saveAs||function(e){"use strict";if(typeof e==="undefined"||typeof navigator!=="undefined"&&/MSIE [1-9]\./.test(navigator.userAgent)){return}var t=e.document,n=function(){return e.URL||e.webkitURL||e},r=t.createElementNS("http://www.w3.org/1999/xhtml","a"),o="download"in r,a=function(e){var t=new MouseEvent("click");e.dispatchEvent(t)},i=/constructor/i.test(e.HTMLElement)||e.safari,f=/CriOS\/[\d]+/.test(navigator.userAgent),u=function(t){(e.setImmediate||e.setTimeout)(function(){throw t},0)},s="application/octet-stream",d=1e3*40,c=function(e){var t=function(){if(typeof e==="string"){n().revokeObjectURL(e)}else{e.remove()}};setTimeout(t,d)},l=function(e,t,n){t=[].concat(t);var r=t.length;while(r--){var o=e["on"+t[r]];if(typeof o==="function"){try{o.call(e,n||e)}catch(a){u(a)}}}},p=function(e){if(/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)){return new Blob([String.fromCharCode(65279),e],{type:e.type})}return e},v=function(t,u,d){if(!d){t=p(t)}var v=this,w=t.type,m=w===s,y,h=function(){l(v,"writestart progress write writeend".split(" "))},S=function(){if((f||m&&i)&&e.FileReader){var r=new FileReader;r.onloadend=function(){var t=f?r.result:r.result.replace(/^data:[^;]*;/,"data:attachment/file;");var n=e.open(t,"_blank");if(!n)e.location.href=t;t=undefined;v.readyState=v.DONE;h()};r.readAsDataURL(t);v.readyState=v.INIT;return}if(!y){y=n().createObjectURL(t)}if(m){e.location.href=y}else{var o=e.open(y,"_blank");if(!o){e.location.href=y}}v.readyState=v.DONE;h();c(y)};v.readyState=v.INIT;if(o){y=n().createObjectURL(t);setTimeout(function(){r.href=y;r.download=u;a(r);h();c(y);v.readyState=v.DONE});return}S()},w=v.prototype,m=function(e,t,n){return new v(e,t||e.name||"download",n)};if(typeof navigator!=="undefined"&&navigator.msSaveOrOpenBlob){return function(e,t,n){t=t||e.name||"download";if(!n){e=p(e)}return navigator.msSaveOrOpenBlob(e,t)}}w.abort=function(){};w.readyState=w.INIT=0;w.WRITING=1;w.DONE=2;w.error=w.onwritestart=w.onprogress=w.onwrite=w.onabort=w.onerror=w.onwriteend=null;return m}(typeof self!=="undefined"&&self||typeof window!=="undefined"&&window||this.content);if(typeof module!=="undefined"&&module.exports){module.exports.saveAs=saveAs}else if(typeof define!=="undefined"&&define!==null&&define.amd!==null){define("FileSaver.js",function(){return saveAs})}
+
+/* mousetrap v1.4.6 craig.is/killing/mice */
+(function(J,r,f){function s(a,b,d){a.addEventListener?a.addEventListener(b,d,!1):a.attachEvent("on"+b,d)}function A(a){if("keypress"==a.type){var b=String.fromCharCode(a.which);a.shiftKey||(b=b.toLowerCase());return b}return h[a.which]?h[a.which]:B[a.which]?B[a.which]:String.fromCharCode(a.which).toLowerCase()}function t(a){a=a||{};var b=!1,d;for(d in n)a[d]?b=!0:n[d]=0;b||(u=!1)}function C(a,b,d,c,e,v){var g,k,f=[],h=d.type;if(!l[a])return[];"keyup"==h&&w(a)&&(b=[a]);for(g=0;g<l[a].length;++g)if(k=
+l[a][g],!(!c&&k.seq&&n[k.seq]!=k.level||h!=k.action||("keypress"!=h||d.metaKey||d.ctrlKey)&&b.sort().join(",")!==k.modifiers.sort().join(","))){var m=c&&k.seq==c&&k.level==v;(!c&&k.combo==e||m)&&l[a].splice(g,1);f.push(k)}return f}function K(a){var b=[];a.shiftKey&&b.push("shift");a.altKey&&b.push("alt");a.ctrlKey&&b.push("ctrl");a.metaKey&&b.push("meta");return b}function x(a,b,d,c){m.stopCallback(b,b.target||b.srcElement,d,c)||!1!==a(b,d)||(b.preventDefault?b.preventDefault():b.returnValue=!1,b.stopPropagation?
+b.stopPropagation():b.cancelBubble=!0)}function y(a){"number"!==typeof a.which&&(a.which=a.keyCode);var b=A(a);b&&("keyup"==a.type&&z===b?z=!1:m.handleKey(b,K(a),a))}function w(a){return"shift"==a||"ctrl"==a||"alt"==a||"meta"==a}function L(a,b,d,c){function e(b){return function(){u=b;++n[a];clearTimeout(D);D=setTimeout(t,1E3)}}function v(b){x(d,b,a);"keyup"!==c&&(z=A(b));setTimeout(t,10)}for(var g=n[a]=0;g<b.length;++g){var f=g+1===b.length?v:e(c||E(b[g+1]).action);F(b[g],f,c,a,g)}}function E(a,b){var d,
+c,e,f=[];d="+"===a?["+"]:a.split("+");for(e=0;e<d.length;++e)c=d[e],G[c]&&(c=G[c]),b&&"keypress"!=b&&H[c]&&(c=H[c],f.push("shift")),w(c)&&f.push(c);d=c;e=b;if(!e){if(!p){p={};for(var g in h)95<g&&112>g||h.hasOwnProperty(g)&&(p[h[g]]=g)}e=p[d]?"keydown":"keypress"}"keypress"==e&&f.length&&(e="keydown");return{key:c,modifiers:f,action:e}}function F(a,b,d,c,e){q[a+":"+d]=b;a=a.replace(/\s+/g," ");var f=a.split(" ");1<f.length?L(a,f,b,d):(d=E(a,d),l[d.key]=l[d.key]||[],C(d.key,d.modifiers,{type:d.action},
+c,a,e),l[d.key][c?"unshift":"push"]({callback:b,modifiers:d.modifiers,action:d.action,seq:c,level:e,combo:a}))}var h={8:"backspace",9:"tab",13:"enter",16:"shift",17:"ctrl",18:"alt",20:"capslock",27:"esc",32:"space",33:"pageup",34:"pagedown",35:"end",36:"home",37:"left",38:"up",39:"right",40:"down",45:"ins",46:"del",91:"meta",93:"meta",224:"meta"},B={106:"*",107:"+",109:"-",110:".",111:"/",186:";",187:"=",188:",",189:"-",190:".",191:"/",192:"`",219:"[",220:"\\",221:"]",222:"'"},H={"~":"`","!":"1",
+"@":"2","#":"3",$:"4","%":"5","^":"6","&":"7","*":"8","(":"9",")":"0",_:"-","+":"=",":":";",'"':"'","<":",",">":".","?":"/","|":"\\"},G={option:"alt",command:"meta","return":"enter",escape:"esc",mod:/Mac|iPod|iPhone|iPad/.test(navigator.platform)?"meta":"ctrl"},p,l={},q={},n={},D,z=!1,I=!1,u=!1;for(f=1;20>f;++f)h[111+f]="f"+f;for(f=0;9>=f;++f)h[f+96]=f;s(r,"keypress",y);s(r,"keydown",y);s(r,"keyup",y);var m={bind:function(a,b,d){a=a instanceof Array?a:[a];for(var c=0;c<a.length;++c)F(a[c],b,d);return this},
+unbind:function(a,b){return m.bind(a,function(){},b)},trigger:function(a,b){if(q[a+":"+b])q[a+":"+b]({},a);return this},reset:function(){l={};q={};return this},stopCallback:function(a,b){return-1<(" "+b.className+" ").indexOf(" mousetrap ")?!1:"INPUT"==b.tagName||"SELECT"==b.tagName||"TEXTAREA"==b.tagName||b.isContentEditable},handleKey:function(a,b,d){var c=C(a,b,d),e;b={};var f=0,g=!1;for(e=0;e<c.length;++e)c[e].seq&&(f=Math.max(f,c[e].level));for(e=0;e<c.length;++e)c[e].seq?c[e].level==f&&(g=!0,
+b[c[e].seq]=1,x(c[e].callback,d,c[e].combo,c[e].seq)):g||x(c[e].callback,d,c[e].combo);c="keypress"==d.type&&I;d.type!=u||w(a)||c||t(b);I=g&&"keydown"==d.type}};J.Mousetrap=m;"function"===typeof define&&define.amd&&define(m)})(window,document);
+
+let renderFolder, meshFolder, lightFolder, exportFolder, gui, controller;
+
+const element = Triangles.add({
+  id: 'container',
+  animate: true
+});
+
+const LIGHT_COPY = {
+  i: 0,
+  count: element.LIGHTS.length(),
+  pickedUp: false,
+  randomize: function() {
+    for (var i = 0; i < element.LIGHTS.length(); i++) {
+      element.LIGHTS.remove(0);
+      element.LIGHTS.add();
+    }
+    loadLight(0,false);
+  }
+};
+loadLight(0,true);
+
+const EXPORT = {
+  width: 2000,
+  height: 1000,
+  exportBig: function() {
+    element.export({custom:true,width: EXPORT.width, height: EXPORT.height},function(blob) {
+      switch(element.renderType) {
+        case 'webgl':
+        saveAs( blob, 'triangles-download.png');
+          break;
+        case 'canvas':
+        saveAs( blob, 'triangles-download.png');
+          break;
+        case 'svg':
+        saveAs(blob, "triangles-download.svg");
+          break;
+        default:
+        saveAs( blob, 'triangles-download.png');
+          break;
+      }
+    });
+  },
+  exportCurrent: function() {
+    element.export({},function(blob) {
+      switch(element.renderType) {
+        case 'webgl':
+        saveAs( blob, 'triangles-download.png');
+          break;
+        case 'canvas':
+        saveAs( blob, 'triangles-download.png');
+          break;
+        case 'svg':
+        saveAs(blob, "triangles-download.svg");
+          break;
+        default:
+        saveAs( blob, 'triangles-download.png');
+          break;
+      }
+    });
+  }
+};
+
+gui = new dat.GUI({autoPlace: false});
+document.getElementById('controls').appendChild(gui.domElement);
+
+renderFolder = gui.addFolder('Render');
+meshFolder = gui.addFolder('Mesh');
+lightFolder = gui.addFolder('Lights');
+exportFolder = gui.addFolder('Export');
+
+lightFolder.open();
+
+controller = renderFolder.add({renderType: 'canvas'},'renderType',{canvas:'canvas',svg:'svg',webgl:'webgl'});
+controller.onChange(function(value) {
+  element.setRenderer(value);
+});
+
+controller = meshFolder.addColor(element.MESH,'ambient_value').name('ambient');
+controller.onChange(function(value) {
+  element.MESH.ambient(value);
+});
+
+controller = meshFolder.addColor(element.MESH,'diffuse_value').name('diffuse');
+controller.onChange(function(value) {
+  element.MESH.diffuse(value);
+});
+
+controller = meshFolder.add(element.MESH,'width_value',0.5,2).name('width');
+controller.onChange(function(value,orig) {
+  element.MESH.width(value);
+});
+
+controller = meshFolder.add(element.MESH,'height_value',0.5,2).name('height');
+controller.onChange(function(value) {
+  element.MESH.height(value);
+});
+
+controller = meshFolder.add(element.MESH,'depth_value',0,200).name('depth');
+controller.onChange(function(value) {
+  element.MESH.depth(value);
+});
+
+controller = meshFolder.add(element.MESH,'slices_value',1,800).name('slices').step(1);
+controller.onChange(function(value) {
+  element.MESH.slices(value);
+});
+
+controller = lightFolder.add(LIGHT_COPY,'count',1,7).step(1).listen();
+controller.onChange(function(value) {
+  let i;
+  const length = element.LIGHTS.length();
+  if (value > length) {
+    for (i = 0; i < value - length; i++) {
+      element.LIGHTS.add();
+    }
+  }else if (value < length) {
+    if (LIGHT_COPY.i > value - 1) LIGHT_COPY.i = value - 1;
+    for (i = 0; i < length - value; i++) {
+      element.LIGHTS.remove(element.LIGHTS.length() - 1);
+    }
+  }
+});
+
+controller = lightFolder.add(LIGHT_COPY,'i',{0:0,1:1,2:2,3:3,4:4,5:5,6:6}).name('index').listen();
+controller.onChange(function(value) {
+  if (value < element.LIGHTS.length()) loadLight(value,false);
+});
+
+controller = lightFolder.addColor(LIGHT_COPY,'ambient');
+controller.onChange(function(value) {
+  LIGHT_COPY.proxy.ambient(value);
+});
+
+controller = lightFolder.addColor(LIGHT_COPY,'diffuse');
+controller.onChange(function(value) {
+  LIGHT_COPY.proxy.diffuse(value);
+});
+
+controller = lightFolder.add(LIGHT_COPY,'x',0,1).listen();
+controller.onChange(function(value) {
+  LIGHT_COPY.proxy.x(value);
+});
+
+controller = lightFolder.add(LIGHT_COPY,'y',0,1).listen();
+controller.onChange(function(value) {
+  LIGHT_COPY.proxy.y(value);
+});
+
+controller = lightFolder.add(LIGHT_COPY,'z',0,1000).step(1).listen();
+controller.onChange(function(value) {
+  LIGHT_COPY.proxy.z(value);
+});
+
+lightFolder.add(LIGHT_COPY,'randomize');
+
+
+
+controller = exportFolder.add(EXPORT, 'width', 100, 3000).step(100);
+controller = exportFolder.add(EXPORT, 'height', 100, 3000).step(100);
+exportFolder.add(EXPORT, 'exportBig').name('export big');
+exportFolder.add(EXPORT, 'exportCurrent').name('export this');
+
+function toggleEl(id) {
+  var e = document.getElementById(id);
+  if(e.style.display == 'block')
+     e.style.display = 'none';
+  else
+     e.style.display = 'block';
+}
+
+container.addEventListener('mousemove',function(event) {
+  if(LIGHT_COPY.pickedup){
+    const x = event.x/element.container.offsetWidth;
+    const y = event.y/element.container.offsetHeight;
+    LIGHT_COPY.x = x;
+    LIGHT_COPY.y = y;
+    LIGHT_COPY.proxy.x(x);
+    LIGHT_COPY.proxy.y(y);
+  }
+});
+
+// Hide the controls completely on pressing H
+Mousetrap.bind('H', function() {
+  toggleEl('controls');
+
+});
+
+// Add a light on ENTER key
+Mousetrap.bind('enter', function() {
+  if (element.LIGHTS.length() < 7) {
+    element.LIGHTS.add();
+    LIGHT_COPY.count += 1;
+  }
+});
+
+// Pick up the light when a space is pressed
+Mousetrap.bind('space', function() {
+  LIGHT_COPY.pickedup = !LIGHT_COPY.pickedup;
+});
+
+function loadLight(i,first) {
+  LIGHT_COPY.i = i;
+  LIGHT_COPY.pickedUp = false;
+  LIGHT_COPY.proxy = element.LIGHTS.get(i);
+  LIGHT_COPY.ambient = LIGHT_COPY.proxy.ambient();
+  LIGHT_COPY.diffuse = LIGHT_COPY.proxy.diffuse();
+  LIGHT_COPY.x = LIGHT_COPY.proxy.x();
+  LIGHT_COPY.y = LIGHT_COPY.proxy.y();
+  LIGHT_COPY.z = LIGHT_COPY.proxy.z();
+  if (!first) {
+    gui.__folders.Lights.__controllers[2].updateDisplay();
+    gui.__folders.Lights.__controllers[3].updateDisplay();
+  }
+}
+
+function hide() {
+  document.getElementById('wrap').style = 'opacity: 0';
+  setTimeout(function() {
+    document.getElementById('wrap').style = 'display: none';
+  },250);
+}
+
+function loop() {
+  Triangles.animate();
+  requestAnimationFrame(loop);
+}
+
+requestAnimationFrame(loop)

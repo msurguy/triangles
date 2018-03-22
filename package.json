@@ -1,6 +1,6 @@
 {
-  "name": "triangles",
-  "version": "1.0.2",
+  "name": "triangles.js",
+  "version": "2.0.0",
   "description": "Triangle background generator",
   "main": "js/triangles.min.js",
   "directories": {
@@ -19,6 +19,7 @@
     "delaunay"
   ],
   "author": "Maks Surguy",
+  "contributors": ["Max Karpawich"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/msurguy/triangles/issues"
