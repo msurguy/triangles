@@ -79,6 +79,15 @@ function mountTiles(container: HTMLElement, items: GalleryTile[]): void {
         if (!target) continue;
         // Canvas keeps 20+ live previews below the browser's WebGL context cap.
         const background = new TrianglesBackground(target.canvasHost, { ...target.item.options, renderer: 'canvas' });
+        // The canvas host is a non-interactive sibling of the tile content, so
+        // pointer events never reach it on their own. Forward them from the tile
+        // to the host, where the library normalizes against the host bounds.
+        if (target.item.options.pointer) {
+          const canvasHost = target.canvasHost;
+          entry.target.addEventListener('pointermove', (event) => {
+            canvasHost.dispatchEvent(new PointerEvent('pointermove', { clientX: event.clientX, clientY: event.clientY }));
+          });
+        }
         if (target.item.options.animate) {
           animated.set(entry.target, background);
           animationToggle.observe(entry.target);
