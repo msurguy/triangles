@@ -120,6 +120,8 @@ Maksim Surguy [@msurguy](https://twitter.com/msurguy)
 
 Pushing `main` validates and deploys the playground with GitHub Pages Actions. Pushing a `v*` tag whose version matches `package.json` validates and publishes the library to NPM with provenance. Configure the repository's GitHub Pages source as **GitHub Actions** and grant its GitHub Actions identity trusted-publisher access on NPM before the first release.
 
+See [`PUBLISHING.md`](PUBLISHING.md) for the full release process, verification steps, and troubleshooting.
+
 ## Release checklist
 
 Done in the repository:
