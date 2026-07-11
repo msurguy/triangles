@@ -73,7 +73,7 @@ export const GALLERY_EXAMPLES: GalleryExample[] = [
     options: {
       seed: 'paper-relief',
       density: 90,
-      depth: 40,
+      depth: 80,
       meshAmbient: '#8d8d8d',
       meshDiffuse: '#ffffff',
       lights: [
@@ -212,7 +212,7 @@ export const GALLERY_EXAMPLES: GalleryExample[] = [
     options: {
       seed: 'arctic-flat',
       density: 130,
-      depth: 12,
+      depth: 70,
       meshAmbient: '#8ecae6',
       meshDiffuse: '#ffffff',
       lights: [
@@ -323,11 +323,11 @@ export const GALLERY_EXAMPLES: GalleryExample[] = [
     options: {
       seed: 'harbor-fog',
       density: 60,
-      depth: 30,
-      meshAmbient: '#6b705c',
-      meshDiffuse: '#fefee3',
+      depth: 100,
+      meshAmbient: '#344291',
+      meshDiffuse: '#646434',
       lights: [
-        { ambient: '#a5a58d', diffuse: '#f0efeb', x: -0.2, y: 0.5, z: 230 }
+        { ambient: '#a5a58d', diffuse: '#f0efeb', x: -0.2, y: 0.5, z: 130 }
       ]
     }
   },

@@ -10,11 +10,17 @@
     <main class="playground-shell">
       <section class="preview-panel" aria-label="Triangles preview">
         <div id="preview" class="preview">
-          <div id="preview-surface" class="preview-surface" aria-hidden="true"></div>
+          <div
+            id="preview-surface"
+            class="preview-surface"
+            aria-hidden="true"
+          ></div>
           <div class="preview-content">
             <p class="eyebrow">Triangles</p>
-            <h1>Deterministic backgrounds for real interfaces.</h1>
-            <p class="preview-copy">A seeded Delaunay surface mounted behind any element.</p>
+            <h1>Deterministic backgrounds for user interfaces.</h1>
+            <p class="preview-copy">
+              A seeded Delaunay surface mounted behind any element.
+            </p>
             <div class="preview-actions">
               <a class="action" href="#gallery">Browse collection</a>
               <a class="action quiet-action" href="#docs">View details</a>
@@ -29,7 +35,11 @@
             <p class="eyebrow">Playground</p>
             <h2>Triangles</h2>
           </div>
-          <a href="https://github.com/msurguy/triangles" aria-label="View source on GitHub">GitHub</a>
+          <a
+            href="https://github.com/msurguy/triangles"
+            aria-label="View source on GitHub"
+            >GitHub</a
+          >
         </div>
         <div id="pane" class="tweakpane"></div>
       </aside>
@@ -43,7 +53,11 @@
         <article class="docs-card">
           <h3>Install</h3>
           <pre><code>npm install triangles</code></pre>
-          <p>Mount a background behind any element. The host keeps its content; the pattern renders behind it, and the same seed, options, and size always produce the same image.</p>
+          <p>
+            Mount a background behind any element. The host keeps its content;
+            the pattern renders behind it, and the same seed, options, and size
+            always produce the same image.
+          </p>
           <pre><code>import TrianglesBackground from 'triangles';
 
 const background = new TrianglesBackground(document.querySelector('#hero'), {
@@ -54,7 +68,10 @@ const background = new TrianglesBackground(document.querySelector('#hero'), {
         </article>
         <article class="docs-card">
           <h3>Browser script</h3>
-          <p>No build step required &mdash; load the IIFE bundle and use the <code>Triangles</code> global.</p>
+          <p>
+            No build step required &mdash; load the IIFE bundle and use the
+            <code>Triangles</code> global.
+          </p>
           <pre><code>&lt;div id="hero"&gt;&lt;h1&gt;Content above the background&lt;/h1&gt;&lt;/div&gt;
 &lt;script src="https://unpkg.com/triangles/dist/triangles.iife.js"&gt;&lt;/script&gt;
 &lt;script&gt;
@@ -67,34 +84,67 @@ const background = new TrianglesBackground(document.querySelector('#hero'), {
         <article class="docs-card">
           <h3>Options</h3>
           <ul>
-            <li><code>seed</code> &mdash; string or number for the deterministic PRNG.</li>
-            <li><code>renderer</code> &mdash; <code>'auto'</code>, <code>'webgl'</code>, <code>'canvas'</code>, or <code>'svg'</code>. Auto prefers WebGL and falls back to Canvas.</li>
-            <li><code>density</code> &mdash; triangle-point density, calibrated to a 500&times;500 surface.</li>
-            <li><code>depth</code> &mdash; vertex elevation range; higher values look craggier.</li>
-            <li><code>meshAmbient</code>, <code>meshDiffuse</code>, <code>lights</code> &mdash; surface and lighting colors. Light <code>x</code>/<code>y</code> range &minus;1 to 1; <code>z</code> is distance from the surface.</li>
-            <li><code>pixelRatio</code>, <code>maxPixelRatio</code> &mdash; output quality; device pixel ratio is capped at 2 by default.</li>
-            <li><code>pointer</code>, <code>animate</code> &mdash; opt-in interaction and animation. Animation respects reduced-motion preferences.</li>
+            <li>
+              <code>seed</code> &mdash; string or number for the deterministic
+              PRNG.
+            </li>
+            <li>
+              <code>renderer</code> &mdash; <code>'auto'</code>,
+              <code>'webgl'</code>, <code>'canvas'</code>, or
+              <code>'svg'</code>. Auto prefers WebGL and falls back to Canvas.
+            </li>
+            <li>
+              <code>density</code> &mdash; triangle-point density, calibrated to
+              a 500&times;500 surface.
+            </li>
+            <li>
+              <code>depth</code> &mdash; vertex elevation range; higher values
+              look craggier.
+            </li>
+            <li>
+              <code>meshAmbient</code>, <code>meshDiffuse</code>,
+              <code>lights</code> &mdash; surface and lighting colors. Light
+              <code>x</code>/<code>y</code> range &minus;1 to 1;
+              <code>z</code> is distance from the surface.
+            </li>
+            <li>
+              <code>pixelRatio</code>, <code>maxPixelRatio</code> &mdash; output
+              quality; device pixel ratio is capped at 2 by default.
+            </li>
+            <li>
+              <code>pointer</code>, <code>animate</code> &mdash; opt-in
+              interaction and animation. Animation respects reduced-motion
+              preferences.
+            </li>
           </ul>
         </article>
         <article class="docs-card">
           <h3>Methods and export</h3>
-          <p>Instances expose <code>setOptions</code>, <code>setRenderer</code>, <code>resize</code>, <code>render</code>, <code>getOptions</code>, <code>getSeed</code>, <code>getSnapshot</code>, <code>toBlob</code>, <code>toSVGString</code>, and <code>destroy</code>.</p>
+          <p>
+            Instances expose <code>setOptions</code>, <code>setRenderer</code>,
+            <code>resize</code>, <code>render</code>, <code>getOptions</code>,
+            <code>getSeed</code>, <code>getSnapshot</code>, <code>toBlob</code>,
+            <code>toSVGString</code>, and <code>destroy</code>.
+          </p>
           <pre><code>background.setRenderer('svg');
 const svg = background.toSVGString({ width: 2400, height: 1400 });
 const png = await background.toBlob({ width: 2400, height: 1400 });
 background.destroy();</code></pre>
-          <p><code>toBlob</code> returns a <code>Blob</code> so your app decides how to download, upload, or persist it.</p>
+          <p>
+            <code>toBlob</code> returns a <code>Blob</code> so your app decides
+            how to download, upload, or persist it.
+          </p>
         </article>
       </div>
     </section>
-    <section class="gallery" aria-label="Usage examples">
+    <section id="gallery" class="gallery" aria-label="Usage examples">
       <header class="gallery-header">
         <p class="eyebrow">In context</p>
         <h2>Real-world usage</h2>
       </header>
       <div id="usage-grid" class="gallery-grid"></div>
     </section>
-    <section id="gallery" class="gallery" aria-label="Example gallery">
+    <section class="gallery" aria-label="Example gallery">
       <header class="gallery-header">
         <p class="eyebrow">Gallery</p>
         <h2>Configurations to start from</h2>

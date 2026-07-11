@@ -122,22 +122,6 @@ Pushing `main` validates and deploys the playground with GitHub Pages Actions. P
 
 See [`PUBLISHING.md`](PUBLISHING.md) for the full release process, verification steps, and troubleshooting.
 
-## Release checklist
-
-Done in the repository:
-
-- [x] v2 migration committed and `main` pushed to origin.
-- [x] Legacy v1 sources and demo assets removed (`index.html`, `css/`, `js/`, `source/`, `build/`, `bower.json`, `compositor.json`).
-- [x] Release notes captured in [`CHANGELOG.md`](CHANGELOG.md).
-- [x] Local browser smoke test passed: `auto`/WebGL/Canvas/SVG switching, seed randomization, PNG and SVG export, deterministic output, and mobile layout (fixed a narrow-viewport overflow in the docs grid).
-
-Remaining maintainer actions (outside this repository):
-
-1. Change the repository's default branch from `master` to `main` in GitHub, then set the Pages source to **GitHub Actions**.
-2. Verify the first `Deploy playground` workflow run and its published Pages URL before deleting the remote `gh-pages` branch.
-3. Re-run the smoke checks against the deployed Pages URL to confirm parity with local.
-4. Configure `triangles` as an NPM trusted publisher for this GitHub repository, then publish the first release by pushing a matching `v2.0.0` tag (the `Publish package` workflow validates and publishes with provenance).
-
 ## Future work
 
 - Add automated browser-integration coverage for WebGL fallback, `ResizeObserver`, pointer interaction, reduced-motion animation, and `toBlob` output.
