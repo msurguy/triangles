@@ -1,6 +1,6 @@
 {
   "name": "triangles",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Seeded, renderer-switchable triangulated backgrounds for the web",
   "type": "module",
   "main": "./dist/index.js",
@@ -55,11 +55,9 @@
   "devDependencies": {
     "@types/node": "^22.15.3",
     "jsdom": "^26.1.0",
+    "tweakpane": "^4.0.5",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "vitest": "^3.1.4"
-  },
-  "dependencies": {
-    "tweakpane": "^4.0.5"
   }
 }

@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.0.1
+
+### Fixed
+
+- Moved `tweakpane` from `dependencies` to `devDependencies`. It is only used by
+  the playground, never by the published library, so installing `triangles` no
+  longer pulls in an unused runtime dependency. This matches the "zero runtime
+  dependencies" guarantee.
+
 ## 2.0.0
 
 Version 2 is a full rewrite. It is intentionally breaking: the library is now a
